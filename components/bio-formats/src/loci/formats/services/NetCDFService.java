@@ -105,6 +105,13 @@ public interface NetCDFService extends Service {
    */
   public Object getArray(String path, int[] origin, int[] shape)
     throws ServiceException;
+  
+  /**
+   * Retrieves all subgroups of a group.
+   * @param path HDF path to the group variable.
+   * @return a list of all subgroup names (without prefix)
+   */
+  public Vector<String> getSubGroups(String path);
 
   /**
    * Retrieves all of a variable's attributes.
@@ -120,8 +127,14 @@ public interface NetCDFService extends Service {
    * @param path HDF path to the dimension.
    * @return Length of the dimension.
    */
-  public int getDimension(String path);
+  public int[] getShape(String path);
 
+  /**
+   * Retrieves the shape of a dataset.
+   * @param path HDF path to the dataset.
+   * @return int[] of shapes.
+   */
+  public int getDimension(String path);
   /**
    * Closes and resets the service.
    * @throws IOException If there is an error closing the file.

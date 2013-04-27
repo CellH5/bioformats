@@ -164,6 +164,7 @@ public class NetCDFServiceImpl extends AbstractService
   {
     String groupName = getDirectory(path);
     String variableName = getName(path);
+    System.out.println(groupName);
     Group group = getGroup(groupName);
 
     Variable variable = group.findVariable(variableName);
@@ -180,6 +181,23 @@ public class NetCDFServiceImpl extends AbstractService
       throw new ServiceException(e);
     }
   }
+  
+  /* (non-Javadoc)
+   * @see loci.formats.NetCDFService#getVariables(java.lang.String)
+   */
+  public Vector<String> getSubGroups(String path) {
+	  Vector<String> variableListForPath = new Vector<String>();
+	  String groupName = getDirectory(path);
+	  Group group = getGroup(groupName);
+	  List<Group> subgroups = group.getGroups();
+      for (Group subgroup : subgroups) {
+        String subgroupName = subgroup.getShortName();
+        variableListForPath.add(subgroupName);
+      }
+      return variableListForPath;
+	  
+  }
+  
 
   /* (non-Javadoc)
    * @see loci.formats.NetCDFService#getVariableAttributes(java.lang.String)
@@ -203,6 +221,15 @@ public class NetCDFServiceImpl extends AbstractService
     String variableName = getName(name);
     Group group = getGroup(groupName);
     return group.findDimension(variableName).getLength();
+  }
+  
+  public int[] getShape(String path) {
+    String groupName = getDirectory(path);
+    String variableName = getName(path);
+    Group group = getGroup(groupName);
+
+    Variable variable = group.findVariable(variableName);
+	return variable.getShape();
   }
 
   /* (non-Javadoc)
