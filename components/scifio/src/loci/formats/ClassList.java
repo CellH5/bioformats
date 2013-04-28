@@ -136,13 +136,13 @@ public class ClassList<T> {
         c = cast(rawClass);
       }
       catch (ClassNotFoundException exc) {
-        LOGGER.debug("Could not find {}", line, exc);
+        LOGGER.error("Could not find {}", line, exc);
       }
       catch (NoClassDefFoundError err) {
-        LOGGER.debug("Could not find {}", line, err);
+        LOGGER.error("Could not find {}", line, err);
       }
       catch (ExceptionInInitializerError err) {
-        LOGGER.debug("Failed to create an instance of {}", line, err);
+        LOGGER.error("Failed to create an instance of {}", line, err);
       }
       catch (RuntimeException exc) {
         // HACK: workaround for bug in Apache Axis2
